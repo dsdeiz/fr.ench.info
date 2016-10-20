@@ -1,30 +1,352 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% for post in site.posts limit:10 %}
+    <title>fr.ench.info</title>
+    <description>fr.ench.info &amp;mdash; blog about tech</description>
+    <link>http://fr.ench.info/</link>
+    <atom:link href="http://fr.ench.info/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 20 Oct 2016 04:35:15 +0000</pubDate>
+    <lastBuildDate>Thu, 20 Oct 2016 04:35:15 +0000</lastBuildDate>
+    <generator>Jekyll v3.3.0</generator>
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-        {% for tag in post.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in post.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
+        <title>Password Management using Password Store</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.passwordstore.org/&quot;&gt;Password Store&lt;/a&gt; is a command line utility for managing your passwords. The passwords are stored in an encrypted file which makes use of &lt;code class=&quot;highlighter-rouge&quot;&gt;gpg&lt;/code&gt;. It also allows you to use &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; to track password changes.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; isn’t as feature-rich compared to &lt;a href=&quot;https://lastpass.com/&quot;&gt;Last Pass&lt;/a&gt; or &lt;a href=&quot;https://agilebits.com/onepassword&quot;&gt;1Password&lt;/a&gt; though.&lt;/p&gt;
+
+&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;Setup is pretty easy. It only requires &lt;code class=&quot;highlighter-rouge&quot;&gt;gpg&lt;/code&gt; which can be installed via &lt;code class=&quot;highlighter-rouge&quot;&gt;brew&lt;/code&gt;. Optionally, you can install &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; if you want to track changes in your storage.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;brew install gpg pass&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;gpg-skip-if-you-already-have-a-key&quot;&gt;GPG (skip if you already have a key)&lt;/h3&gt;
+&lt;p&gt;You would need to set up your gpg key if you don’t have one.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;gpg --gen-key&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;You will then be presented with this prompt:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;gpg --gen-key
+gpg &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GnuPG&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 1.4.19; Copyright &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;C&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 2015 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please &lt;span class=&quot;k&quot;&gt;select &lt;/span&gt;what kind of key you want:
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; RSA and RSA &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;default&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; DSA and Elgamal
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; DSA &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sign only&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;4&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; RSA &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sign only&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Your selection?&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Select the default (RSA and RSA). The other steps will depend on how you want your key to be set up.&lt;/p&gt;
+
+&lt;h3 id=&quot;pass&quot;&gt;Pass&lt;/h3&gt;
+
+&lt;p&gt;Initialize &lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass init&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This will create a directory in your &lt;code class=&quot;highlighter-rouge&quot;&gt;$HOME&lt;/code&gt; called &lt;code class=&quot;highlighter-rouge&quot;&gt;.password-store&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pass help&lt;/code&gt; provides a list of all available commands so I’ll probably just list here the basics. &lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; simply lists all your stored passwords.&lt;/p&gt;
+
+&lt;h3 id=&quot;inserting&quot;&gt;Inserting&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; treats &lt;code class=&quot;highlighter-rouge&quot;&gt;/&lt;/code&gt; similar to subfolders. An example is this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass
+Password Store
+├── foo
+│   └── bar.gpg
+│   └── baz.gpg
+└── bar
+    └── foo.gpg&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This can be accomplished by invoking the commands:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass insert foo/bar
+Enter password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;foo/bar:
+Retype password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;foo/bar:
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass insert foo/baz
+Enter password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;foo/baz:
+Retype password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;foo/baz:
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass insert bar/foo
+Enter password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;bar/foo:
+Retype password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;bar/foo:&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;editing&quot;&gt;Editing&lt;/h3&gt;
+
+&lt;p&gt;Editing is similar to inserting.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass edit foo/bar&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;You will then be asked to enter your password for your key. This will open up your default editor where you can modify your password.&lt;/p&gt;
+
+&lt;h3 id=&quot;reading&quot;&gt;Reading&lt;/h3&gt;
+
+&lt;p&gt;This is similar to editing in which &lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; would open up a prompt which asks your password for your key.&lt;/p&gt;
+
+&lt;p&gt;To display your password, invoke this command:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass foo/bar&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;To copy your password in the clipboard, just add the &lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt; flag. &lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; removes it from the clipboard after 45 seconds.&lt;/p&gt;
+
+&lt;h2 id=&quot;storage&quot;&gt;Storage&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; supports &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt;. Depending on how you want it stored, you can either track it on Github or some other service. A few posts in SO say that it’s fine to store them &lt;a href=&quot;http://superuser.com/questions/981297/is-it-safe-to-store-encrypted-passwords-on-github&quot;&gt;on&lt;/a&gt; &lt;a href=&quot;http://stackoverflow.com/questions/8839141/is-it-considered-good-practice-to-store-passwords-in-a-private-github-repository&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A quick rundown on using &lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass git remote add &amp;lt;&lt;span class=&quot;nb&quot;&gt;alias&lt;/span&gt;&amp;gt; &amp;lt;remote&amp;gt;
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pass git push&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Everytime you insert, modify, or delete a password, &lt;code class=&quot;highlighter-rouge&quot;&gt;pass&lt;/code&gt; issues a commit.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 19 Dec 2015 00:00:00 +0000</pubDate>
+        <link>http://fr.ench.info/2015/12/19/password-management-using-password-store/</link>
+        <guid isPermaLink="true">http://fr.ench.info/2015/12/19/password-management-using-password-store/</guid>
+        
+        <category>tools</category>
+        
+        <category>osx</category>
+        
+        <category>commandline</category>
+        
+        
+        <category>tools</category>
+        
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Moving to Jekyll</title>
+        <description>&lt;p&gt;Finally moved back to jekyll. Nothing fancy here though. This is hosted again in Github Pages.&lt;/p&gt;
+
+&lt;p&gt;I’ve made some small modifications on the default template and added the &lt;a href=&quot;https://github.com/jekyll/jekyll-archives&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll-archives&lt;/code&gt;&lt;/a&gt; plugin. I might add some additional plugins and/or modifications (disqus comments). Everything is based on &lt;a href=&quot;http://jekyllrb.com/docs/home/&quot;&gt;jekyll’s documentation&lt;/a&gt;. Here are a few things that might be worth noting though:&lt;/p&gt;
+
+&lt;h2 id=&quot;bundler&quot;&gt;Bundler&lt;/h2&gt;
+
+&lt;p&gt;It comes with a &lt;code class=&quot;highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;. Executing &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle install&lt;/code&gt; or simply &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle&lt;/code&gt; will install the dependencies that came with the installation. Also I think it’s recommended to prefix commands with &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle exec&lt;/code&gt; (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle exec jekyll serve&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h2 id=&quot;ruby-version&quot;&gt;Ruby Version&lt;/h2&gt;
+
+&lt;p&gt;The ruby version is specified in the &lt;code class=&quot;highlighter-rouge&quot;&gt;.ruby-version&lt;/code&gt; file which makes it friendly with popular ruby version managers.&lt;/p&gt;
+
+&lt;h2 id=&quot;continuous-integration&quot;&gt;Continuous Integration&lt;/h2&gt;
+
+&lt;p&gt;The documentation for jekyll includes &lt;a href=&quot;http://jekyllrb.com/docs/continuous-integration/&quot;&gt;Travis CI&lt;/a&gt;. It makes use of the &lt;a href=&quot;https://github.com/gjtorikian/html-proofer&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;html-proofer&lt;/code&gt;&lt;/a&gt; gem to check your built HTML files.&lt;/p&gt;
+
+&lt;h2 id=&quot;automated-deployment&quot;&gt;Automated Deployment&lt;/h2&gt;
+
+&lt;p&gt;The documentation for jekyll also includes &lt;a href=&quot;http://jekyllrb.com/docs/deployment-methods/#kickster&quot;&gt;automated deployment&lt;/a&gt; for Github Pages but with a gem called &lt;a href=&quot;http://kickster.nielsenramon.com/&quot;&gt;kickster&lt;/a&gt;. I didn’t install the gem but rather just copied its deployment scripts for &lt;a href=&quot;https://github.com/nielsenramon/kickster/tree/master/snippets/travis&quot;&gt;Travis CI&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 18 Dec 2015 00:00:00 +0000</pubDate>
+        <link>http://fr.ench.info/2015/12/18/moving-to-jekyll/</link>
+        <guid isPermaLink="true">http://fr.ench.info/2015/12/18/moving-to-jekyll/</guid>
+        
+        
+        <category>jekyll</category>
+        
+      </item>
+    
+      <item>
+        <title>PHP, Coder, and Code Sniffer in OS X</title>
+        <description>&lt;h3 id=&quot;php&quot;&gt;PHP&lt;/h3&gt;
+
+&lt;p&gt;I originally used the PHP package bundled with OS X. This doesn’t seem to be easily maintainable since you would have an outdated PHP version. I’ve since replaced this with &lt;a href=&quot;https://github.com/Homebrew/homebrew-php&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;homebrew-php&lt;/code&gt;&lt;/a&gt; specifically the package &lt;code class=&quot;highlighter-rouge&quot;&gt;php54&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; If you’ve added some configurations in PHP which is most likely located at &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/php.ini&lt;/code&gt;, you might want to copy the custom configurations over to your new PHP ini location which is &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/etc/php/5.4/php.ini&lt;/code&gt; in my case. Also, PEAR needs to be reconfigured. &lt;code class=&quot;highlighter-rouge&quot;&gt;brew info php54&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install php54&lt;/code&gt; would note that you would need to invoke this commands to clean up PEAR configurations:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;chmod -R ug+w /usr/local/Cellar/php54/5.4.38/lib/php
+pear config-set php_ini /usr/local/etc/php/5.4/php.ini system&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;I had an old installation of &lt;code class=&quot;highlighter-rouge&quot;&gt;PHP_CodeSniffer&lt;/code&gt; and it got confusing when I tried to use &lt;code class=&quot;highlighter-rouge&quot;&gt;phpcs&lt;/code&gt; since it was using the old sniffs rather than the ones that I recently updated.&lt;/p&gt;
+
+&lt;h3 id=&quot;code-sniffer&quot;&gt;Code Sniffer&lt;/h3&gt;
+
+&lt;p&gt;Installation of PHPCS is as easy as doing &lt;code class=&quot;highlighter-rouge&quot;&gt;composer global require &quot;squizlabs/php_codesniffer=*&quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;coder&quot;&gt;Coder&lt;/h3&gt;
+
+&lt;p&gt;Installation of Coder is pretty much straightforward. Everything needed is &lt;a href=&quot;https://www.drupal.org/node/1419988&quot;&gt;here&lt;/a&gt;. I’ve installed it using &lt;code class=&quot;highlighter-rouge&quot;&gt;drush&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;After installating Coder, you’ll need to register the sniffs by invoking &lt;code class=&quot;highlighter-rouge&quot;&gt;phpcs --config-set installed_paths $HOME/.drush/coder/coder_sniffer&lt;/code&gt;. Otherwise; you can do &lt;code class=&quot;highlighter-rouge&quot;&gt;phpcs --standard=path/to/sniffs/Drupal -- /path/to/file&lt;/code&gt; to do the syntax check.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; PHPCS 1.x works with Coder 7.x-2.x while PHPCS 2.x works with Coder 8.x-2.x (source &lt;a href=&quot;https://www.drupal.org/node/2342611&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://www.drupal.org/node/2387871#comment-9409549&quot;&gt;here&lt;/a&gt;). I’ve installed Coder 8.x-2.x which also works with Drupal 7 modules.&lt;/p&gt;
+
+&lt;p&gt;There’s a lot more you can do with PHPCS. One that I find useful is &lt;code class=&quot;highlighter-rouge&quot;&gt;phpcbf&lt;/code&gt;. More usage examples &lt;a href=&quot;https://www.drupal.org/node/1587138&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 07 Apr 2015 00:00:00 +0000</pubDate>
+        <link>http://fr.ench.info/2015/04/07/php-coder-codesniffer-osx/</link>
+        <guid isPermaLink="true">http://fr.ench.info/2015/04/07/php-coder-codesniffer-osx/</guid>
+        
+        
+        <category>development</category>
+        
+      </item>
+    
+      <item>
+        <title>PHP 5.4 and PHPDBG in OS X</title>
+        <description>&lt;p&gt;I got &lt;a href=&quot;http://phpdbg.com/&quot;&gt;PHPDBG&lt;/a&gt; enabled in PHP 5.4 although I’ve never bothered giving it a try. Recently, I decided to play around with it to try to compare it with Xdebug. I tested it with a minimal Drupal installation.&lt;/p&gt;
+
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
+
+&lt;h4 id=&quot;php-and-phpdbg&quot;&gt;PHP and PHPDBG&lt;/h4&gt;
+
+&lt;p&gt;I use &lt;a href=&quot;https://github.com/Homebrew/homebrew-php&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;homebrew-php&lt;/code&gt;&lt;/a&gt; to install PHP 5.4. Versions 5.4+ have the flag &lt;code class=&quot;highlighter-rouge&quot;&gt;--with-phpdbg&lt;/code&gt; if you wish to include PHPDBG during installation therefore installation is simply via invoking &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install php54 --with-phpdbg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The version of PHPDBG that comes with the &lt;code class=&quot;highlighter-rouge&quot;&gt;php54&lt;/code&gt; package is &lt;code class=&quot;highlighter-rouge&quot;&gt;v0.3.2&lt;/code&gt;. I gave this a try but didn’t much like it as it had a lot of bugs. What worked for me was replacing it with the one that had the latest changes (specifically &lt;a href=&quot;https://github.com/krakjoe/phpdbg/commit/c6802cdf5f4f0da213b365510df056b177d5c7e2&quot;&gt;this&lt;/a&gt;). It still had a few bugs in it but it was way better. I had to change the source of &lt;code class=&quot;highlighter-rouge&quot;&gt;homebrew-php&lt;/code&gt; to make it work. Here’s a diff of my changes at &lt;code class=&quot;highlighter-rouge&quot;&gt;homebrew-php&lt;/code&gt; installation directory:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;diff --git a/Abstract/abstract-php-version.rb b/Abstract/abstract-php-version.rb
+index 943b259..9b7dee8 100644
+--- a/Abstract/abstract-php-version.rb
++++ b/Abstract/abstract-php-version.rb
+@@ -1,10 +1,10 @@
+ class AbstractPhpVersion &amp;lt; Formula
+   module PhpdbgDefs
+-    PHPDBG_SRC_TARBAL &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'https://github.com/krakjoe/phpdbg/archive/v0.3.2.tar.gz'&lt;/span&gt;
++    PHPDBG_SRC_TARBAL &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'https://github.com/krakjoe/phpdbg/archive/master.tar.gz'&lt;/span&gt;
+     PHPDBG_CHECKSUM   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+-                        :md5    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'84255abff00fb31e338d03564c3cc4e4'&lt;/span&gt;,
+-                        :sha1   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'c57174ab235ec69997e1a37e6d2afe3e4edfb749'&lt;/span&gt;,
+-                        :sha256 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'feab6e29ef9a490aa53332fe014e8026d89d970acc5105f37330b2f31e711bbd'&lt;/span&gt;,
++                        :md5    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'5a9346fe533fc486e2427cb0517b7159'&lt;/span&gt;,
++                        :sha1   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'25e53a5ff1c66afd8c34a98404d5242e61b4d55b'&lt;/span&gt;,
++                        :sha256 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'06eb09e5cb5deac4812a0ed7305e9d640f1ec6b6fbfdc6ea9a24bf7ea9d01929'&lt;/span&gt;,
+                       &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+   end
+ &lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;drupal&quot;&gt;Drupal&lt;/h4&gt;
+
+&lt;p&gt;I had a minimal installation of Drupal. I simply grabbed Drupal 7 and installed it via &lt;code class=&quot;highlighter-rouge&quot;&gt;drush si --db-url=sqlite://sites/default/files/.ht.sqlite -y&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;set-up&quot;&gt;Set Up&lt;/h3&gt;
+
+&lt;p&gt;The documentation is a bit difficult to understand considering that I am relatively new to debugging. Unlike Xdebug, you’ll need to mock a webserver to get PHPDBG to work with web applications like Drupal. An example can be found from both the &lt;a href=&quot;https://github.com/krakjoe/phpdbg/blob/master/web-bootstrap.php&quot;&gt;repository&lt;/a&gt; and &lt;a href=&quot;http://phpdbg.com/docs/mocking-webserver&quot;&gt;documentation&lt;/a&gt;. I used it like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /path/to/drupal
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;phpdbg
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;index.php
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;ev include &lt;span class=&quot;s1&quot;&gt;'/path/to/web-bootstrap.php'&lt;/span&gt;;&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The file needs to be modified for it to work with Drupal. I made the following changes to it:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;diff --git a/web-bootstrap-1.php b/web-bootstrap.php
+index 7b8c5d3..da9333b 100644
+--- a/web-bootstrap-1.php
++++ b/web-bootstrap.php
+@@ -11,7 +11,7 @@
+ &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;!defined&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'PHPDBG_BOOTSTRAPPED'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; 
+ &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     /&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; define these once &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;/
+-    define&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PHPDBG_BOOTPATH&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;/opt/php-zts/htdocs&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
++    define&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PHPDBG_BOOTPATH&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;/path/to/drupal&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
+     define&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PHPDBG_BOOTSTRAP&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;index.php&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
+     define&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PHPDBG_BOOTSTRAPPED&quot;&lt;/span&gt;, sprintf&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/%s&quot;&lt;/span&gt;, PHPDBG_BOOTSTRAP&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;; 
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+@@ -49,13 +49,14 @@ &lt;span class=&quot;nv&quot;&gt;$_SERVER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; array
+   &lt;span class=&quot;s1&quot;&gt;'SERVER_PROTOCOL'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'HTTP/1.1'&lt;/span&gt;,
+   &lt;span class=&quot;s1&quot;&gt;'REQUEST_METHOD'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'GET'&lt;/span&gt;,
+   &lt;span class=&quot;s1&quot;&gt;'QUERY_STRING'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;,
+-  &lt;span class=&quot;s1&quot;&gt;'REQUEST_URI'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; PHPDBG_BOOTSTRAPPED,
++  // &lt;span class=&quot;s1&quot;&gt;'REQUEST_URI'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; PHPDBG_BOOTSTRAPPED,
++  &lt;span class=&quot;s1&quot;&gt;'REQUEST_URI'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'/node/1'&lt;/span&gt;,
+   &lt;span class=&quot;s1&quot;&gt;'SCRIPT_NAME'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; PHPDBG_BOOTSTRAPPED,
+   &lt;span class=&quot;s1&quot;&gt;'PHP_SELF'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; PHPDBG_BOOTSTRAPPED,
+   &lt;span class=&quot;s1&quot;&gt;'REQUEST_TIME'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;,
+ &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
+ 
+-&lt;span class=&quot;nv&quot;&gt;$_GET&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;;
++&lt;span class=&quot;nv&quot;&gt;$_GET&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'q'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s1&quot;&gt;'node/1'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
+ &lt;span class=&quot;nv&quot;&gt;$_REQUEST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;;
+ &lt;span class=&quot;nv&quot;&gt;$_POST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;;
+ &lt;span class=&quot;nv&quot;&gt;$_COOKIE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;;&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;basic-usages&quot;&gt;Basic Usages&lt;/h3&gt;
+
+&lt;p&gt;Set a breakpoint by invoking &lt;code class=&quot;highlighter-rouge&quot;&gt;break func_name&lt;/code&gt; and finally invoking &lt;code class=&quot;highlighter-rouge&quot;&gt;run&lt;/code&gt; to start debugging. &lt;code class=&quot;highlighter-rouge&quot;&gt;step&lt;/code&gt; would step through each line of code. &lt;code class=&quot;highlighter-rouge&quot;&gt;ev&lt;/code&gt; can be used to evaluate expressions. An example is inspecting the available variables in the current scope and stack frame.&lt;/p&gt;
+
+&lt;p&gt;I did it like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;index.php
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Execution context not changed]
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;ev include &lt;span class=&quot;s1&quot;&gt;'/private/tmp/web-bootstrap.php'&lt;/span&gt;;
+1
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;run
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Breakpoint &lt;span class=&quot;c&quot;&gt;#0 in node_load() at /path/to/drupal/modules/node/node.module:962, hits: 1]&lt;/span&gt;
+&amp;gt;00962: &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;node_load&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; NULL, &lt;span class=&quot;nv&quot;&gt;$vid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; NULL, &lt;span class=&quot;nv&quot;&gt;$reset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; FALSE&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+ 00963:   &lt;span class=&quot;nv&quot;&gt;$nids&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;isset&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ? array&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; : array&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;;
+ 00964:   &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;isset&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ? array&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'vid'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;$vid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; : array&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;;
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;s
+&amp;gt;00963:   &lt;span class=&quot;nv&quot;&gt;$nids&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;isset&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ? array&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; : array&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;;
+ 00964:   &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;isset&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ? array&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'vid'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;$vid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; : array&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;;
+ 00965:   &lt;span class=&quot;nv&quot;&gt;$node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; node_load_multiple&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nids&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$reset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
+prompt&amp;gt;
+&amp;gt;00964:   &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;isset&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$vid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ? array&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'vid'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;$vid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; : array&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;;
+ 00965:   &lt;span class=&quot;nv&quot;&gt;$node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; node_load_multiple&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nids&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$reset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
+ 00966:   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$node&lt;/span&gt; ? reset&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; : FALSE;
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;ev &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;ev &lt;span class=&quot;nv&quot;&gt;$nid&lt;/span&gt;
+1
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;s
+&amp;gt;00965:   &lt;span class=&quot;nv&quot;&gt;$node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; node_load_multiple&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$nids&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$reset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;;
+ 00966:   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$node&lt;/span&gt; ? reset&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; : FALSE;
+ 00967: &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;prompt&amp;gt; &lt;/span&gt;ev &lt;span class=&quot;nv&quot;&gt;$conditions&lt;/span&gt;
+Array
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+prompt&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;I haven’t figured out some of the other basic usages such as stepping over a line rather than stepping through it.&lt;/p&gt;
+
+&lt;p&gt;More usage instructions/examples on the &lt;a href=&quot;http://phpdbg.com/docs&quot;&gt;documentation&lt;/a&gt;, &lt;a href=&quot;https://github.com/krakjoe/phpdbg/tree/master/tests&quot;&gt;tests&lt;/a&gt;, and &lt;a href=&quot;https://github.com/bwoebi/phpdbg-docs&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 06 Apr 2015 00:00:00 +0000</pubDate>
+        <link>http://fr.ench.info/2015/04/06/php54-phpdbg-osx/</link>
+        <guid isPermaLink="true">http://fr.ench.info/2015/04/06/php54-phpdbg-osx/</guid>
+        
+        
+        <category>development</category>
+        
+      </item>
+    
   </channel>
 </rss>
